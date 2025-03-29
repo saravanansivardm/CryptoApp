@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
     kotlin("kapt")
 }
 
@@ -88,7 +90,6 @@ dependencies {
     //Dagger - Hilt
     implementation (libs.hilt.android.v252)
     kapt (libs.hilt.android.compiler.v252)
-    implementation (libs.androidx.hilt.lifecycle.viewmodel)
     kapt (libs.androidx.hilt.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
 
