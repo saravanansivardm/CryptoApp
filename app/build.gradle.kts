@@ -1,7 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
 }
 
 android {
@@ -16,6 +17,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -28,32 +32,73 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "19"
     }
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.core.ktx.v1150)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.material.v178)
+    implementation(libs.androidx.navigation.compose.v289)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson.v2110)
+    implementation(libs.okhttp.v4120)
+    implementation(libs.okhttp.logging)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.hilt.android.v252)
+    kapt(libs.hilt.android.compiler.v252)
+
+
+
+    // Compose dependencies
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.navigation.compose.v289)
+    implementation (libs.accompanist.flowlayout)
+
+    // Coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+
+    // Coroutine Lifecycle Scopes
+    implementation (libs.androidx.lifecycle.viewmodel.ktx.v287)
+    implementation (libs.androidx.lifecycle.runtime.ktx)
+
+    //Dagger - Hilt
+    implementation (libs.hilt.android.v252)
+    kapt (libs.hilt.android.compiler.v252)
+    implementation (libs.androidx.hilt.lifecycle.viewmodel)
+    kapt (libs.androidx.hilt.compiler)
+    implementation (libs.androidx.hilt.navigation.compose)
+
+    // Retrofit
+    implementation (libs.retrofit.v2110)
+    implementation (libs.converter.gson.v2110)
+    implementation (libs.okhttp.v500alpha14)
+    implementation (libs.okhttp.logging)
+}
+
+kapt {
+    correctErrorTypes = true
 }
