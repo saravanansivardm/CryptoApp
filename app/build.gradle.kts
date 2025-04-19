@@ -2,7 +2,10 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
     kotlin("kapt")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
@@ -21,6 +24,24 @@ android {
             useSupportLibrary = true
         }
     }
+
+    detekt {
+//        toolVersion = "1.23.6"
+//        buildUponDefaultConfig = true // use default + custom rules
+//        allRules = true // if true, applies all available rules
+//        autoCorrect = true // auto-corrects issues
+
+        /*tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+            reports {
+                html.required.set(true)   // Generates HTML report
+                xml.required.set(true)   // Disables XML report
+                txt.required.set(true)   // Disables TXT report
+                sarif.required.set(true) // Disables SARIF (GitHub code scanning)
+            }
+        }*/
+    }
+
+
 
     buildTypes {
         release {
@@ -66,37 +87,37 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.appcompat)
     kapt(libs.androidx.room.compiler)
     implementation(libs.hilt.android.v252)
     kapt(libs.hilt.android.compiler.v252)
 
 
-
     // Compose dependencies
-    implementation (libs.androidx.lifecycle.viewmodel.compose)
-    implementation (libs.androidx.navigation.compose.v289)
-    implementation (libs.accompanist.flowlayout)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose.v289)
+    implementation(libs.accompanist.flowlayout)
 
     // Coroutines
-    implementation (libs.kotlinx.coroutines.core)
-    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     // Coroutine Lifecycle Scopes
-    implementation (libs.androidx.lifecycle.viewmodel.ktx.v287)
-    implementation (libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v287)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     //Dagger - Hilt
-    implementation (libs.hilt.android.v252)
-    kapt (libs.hilt.android.compiler.v252)
-    implementation (libs.androidx.hilt.lifecycle.viewmodel)
-    kapt (libs.androidx.hilt.compiler)
-    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.hilt.android.v252)
+    kapt(libs.hilt.android.compiler.v252)
+    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // Retrofit
-    implementation (libs.retrofit.v2110)
-    implementation (libs.converter.gson.v2110)
-    implementation (libs.okhttp.v500alpha14)
-    implementation (libs.okhttp.logging)
+    implementation(libs.retrofit.v2110)
+    implementation(libs.converter.gson.v2110)
+    implementation(libs.okhttp.v500alpha14)
+    implementation(libs.okhttp.logging)
 }
 
 kapt {
