@@ -4,4 +4,5 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.9.25" apply false
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
     id("io.gitlab.arturbosch.detekt") version("1.23.8")
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0" // check for latest
 }
