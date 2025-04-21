@@ -32,8 +32,15 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Run lint
-        run: ./gradlew ktlintCheck detekt
+      - name: Run Detekt, ktlint,and PMD
+        run: ./gradlew ktlintCheck detekt runPmd
+
+      - name: Upload PMD Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pmd-report
+          path: app/build/reports/pmd/
 
 
 
