@@ -1,3 +1,5 @@
+// PMD custom task
+import org.gradle.api.plugins.quality.Pmd
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -6,6 +8,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
     id("io.gitlab.arturbosch.detekt")
+    id("pmd")
 }
 
 android {
@@ -24,24 +27,6 @@ android {
             useSupportLibrary = true
         }
     }
-
-    detekt {
-//        toolVersion = "1.23.6"
-//        buildUponDefaultConfig = true // use default + custom rules
-//        allRules = true // if true, applies all available rules
-//        autoCorrect = true // auto-corrects issues
-
-        /*tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-            reports {
-                html.required.set(true)   // Generates HTML report
-                xml.required.set(true)   // Disables XML report
-                txt.required.set(true)   // Disables TXT report
-                sarif.required.set(true) // Disables SARIF (GitHub code scanning)
-            }
-        }*/
-    }
-
-
 
     buildTypes {
         release {
@@ -69,6 +54,42 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+// PMD Configuration (outside android block)
+pmd {
+    toolVersion = "6.55.0"
+    isConsoleOutput = true
+    ruleSetFiles = files("config/pmd/ruleset.xml")
+    ruleSets = listOf()
+}
+
+
+tasks.register<Pmd>("runPmd") {
+    group = "verification"
+    description = "Run PMD analysis"
+
+    source = fileTree("src/main/java") {
+        include("**/*.java")
+        exclude(
+            "**/test/**",
+            "**/androidTest/**",
+            "**/commonTest/**",
+            "**/jvmTest/**",
+            "**/androidUnitTest/**",
+            "**/androidInstrumentedTest/**",
+            "**/jsTest/**",
+            "**/iosTest/**"
+        )
+    }
+
+    ruleSetFiles = files("${rootDir}/config/pmd/ruleset.xml")
+    ruleSets = listOf()
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
     }
 }
 

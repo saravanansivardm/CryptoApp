@@ -18,6 +18,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val list = listOf(1, 2, 3, 4, 5)
+            for (i in list.iterator().withIndex()) {
+                println(i)
+            }
+
+
+            try {
+                var s1: String = ""
+                s1.toString()
+                check(s1)
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+            }
             CryptocurrencyAppTheme {
                 Surface(color = Color.Black) {
                     val navController = rememberNavController()
@@ -40,4 +53,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+fun check(value: String?) {
+    if (value == null) throw NullPointerException() // ❌ Detekt will flag this
 }
