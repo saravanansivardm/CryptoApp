@@ -67,7 +67,7 @@ tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
     reports {
         html {
             required.set(true)
-            outputLocation.set(file("app/build/reports/detekt/detekt.html"))
+            outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
         }
         xml.required.set(true)
         txt.required.set(true)

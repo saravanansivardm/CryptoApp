@@ -24,6 +24,9 @@ jobs:
       - name: Run Detekt & ktlint
         run: ./gradlew ktlintCheck detekt --continue || true
 
+      - name: Show all Detekt files
+        run: find . -name "detekt.*"
+
       - name: List Detekt report directory
         run: ls -la app/build/reports/detekt/
 
