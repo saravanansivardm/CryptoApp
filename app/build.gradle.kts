@@ -25,27 +25,6 @@ android {
         }
     }
 
-    detekt {
-        toolVersion = "1.23.6"
-        buildUponDefaultConfig = true // use default + custom rules
-        allRules = true // if true, applies all available rules
-        autoCorrect = true // auto-corrects issues
-//        toolVersion = "1.23.6"
-//        buildUponDefaultConfig = true // use default + custom rules
-//        allRules = true // if true, applies all available rules
-//        autoCorrect = true // auto-corrects issues
-
-        /*tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-            reports {
-                html.required.set(true)   // Generates HTML report
-                xml.required.set(true)   // Disables XML report
-                txt.required.set(true)   // Disables TXT report
-                sarif.required.set(true) // Disables SARIF (GitHub code scanning)
-            }
-        }*/
-    }
-
-
 
     buildTypes {
         release {
