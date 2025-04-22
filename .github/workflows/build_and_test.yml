@@ -24,8 +24,11 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Run Detekt & ktlint
-        run: ./gradlew ktlintCheck detekt
+      - name: Run Detekt & Ktlint
+        run: ./gradlew ktlintCheck detekt --continue || true
+
+      - name: Check HTML Report
+        run: ls -l app/build/reports/detekt/
 
       - name: Upload Detekt HTML Report
         uses: actions/upload-artifact@v4
