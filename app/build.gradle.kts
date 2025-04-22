@@ -59,7 +59,7 @@ android {
 }
 
 detekt {
-    config.setFrom(files("$rootDir/config/detekt.yml"))
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
 }
 
