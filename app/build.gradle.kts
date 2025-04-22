@@ -8,7 +8,7 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
-    id("io.gitlab.arturbosch.detekt")
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
     id("pmd")
 }
 
@@ -65,13 +65,15 @@ detekt {
 
 tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
     reports {
-        html.required.set(true)
-        html.outputLocation.set(file("app/build/reports/detekt/detekt.html"))
-
-        xml.required.set(true)
+        html {
+            required.set(true)
+            outputLocation.set(file("app/build/reports/detekt/detekt.html"))
+        }
+        
+        xml.required.set(false)
         xml.outputLocation.set(file("app/build/reports/detekt/detekt.xml"))
 
-        txt.required.set(true)
+        txt.required.set(false)
         txt.outputLocation.set(file("app/build/reports/detekt/detekt.txt"))
     }
 }
@@ -107,8 +109,8 @@ tasks.register<Pmd>("runPmd") {
     ruleSets = listOf()
 
     reports {
-        xml.required.set(true)
-        html.required.set(true)
+        xml.required.set(false)
+        html.required.set(false)
     }
 }
 

@@ -1,11 +1,8 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Run Lint Checks
 
 on:
   push:
     branches: [ "master" ]
-  workflow_dispatch:
 
 jobs:
   run_lint_checks:
@@ -24,11 +21,14 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Run Detekt & Ktlint
+      - name: Run Detekt & ktlint
         run: ./gradlew ktlintCheck detekt --continue || true
 
-      - name: Check HTML Report
+      - name: List Detekt report directory
         run: ls -l app/build/reports/detekt/
+
+      - name: Show all Detekt files
+        run: find . -name "detekt.*"
 
       - name: Upload Detekt HTML Report
         uses: actions/upload-artifact@v4
