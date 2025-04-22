@@ -1,7 +1,6 @@
 // PMD custom task
 import org.gradle.api.plugins.quality.Pmd
 
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -10,6 +9,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     kotlin("kapt")
     id("io.gitlab.arturbosch.detekt")
+    id("pmd")
 }
 
 android {
@@ -57,6 +57,42 @@ android {
         }
     }
 }
+
+// PMD Configuration (outside android block)
+pmd {
+    toolVersion = "6.55.0"
+    isConsoleOutput = true
+    ruleSetFiles = files("config/pmd/ruleset.xml")
+    ruleSets = listOf()
+}
+
+tasks.register<Pmd>("runPmd") {
+    group = "verification"
+    description = "Run PMD analysis"
+
+    source = fileTree("src/main/java") {
+        include("**/*.java")
+        exclude(
+            "**/test/**",
+            "**/androidTest/**",
+            "**/commonTest/**",
+            "**/jvmTest/**",
+            "**/androidUnitTest/**",
+            "**/androidInstrumentedTest/**",
+            "**/jsTest/**",
+            "**/iosTest/**"
+        )
+    }
+
+    ruleSetFiles = files("${rootDir}/config/pmd/ruleset.xml")
+    ruleSets = listOf()
+
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+}
+
 dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.core.ktx.v1150)
