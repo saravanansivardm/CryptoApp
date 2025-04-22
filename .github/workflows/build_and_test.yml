@@ -39,8 +39,8 @@ jobs:
            app/build/reports/detekt/detekt.xml
            app/build/reports/detekt/detekt.txt
 
-#            - name: Upload Detekt HTML Report
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: detekt-html-report
-#          path: app/build/reports/detekt/detekt.html
+#     - name: Upload Detekt HTML Report
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: detekt-html-report
+#         path: app/build/reports/detekt/detekt.html
