@@ -56,16 +56,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    detekt {
-        config = files("$rootDir/detekt.yml")
-        buildUponDefaultConfig = true
-        reports {
-            xml.required.set(true)
-            html.required.set(true)
-            txt.required.set(false)
-        }
-    }
-
 }
 dependencies {
     implementation(libs.androidx.activity.ktx)
