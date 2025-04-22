@@ -66,13 +66,13 @@ detekt {
 tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
     reports {
         html.required.set(true)
-        html.outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+        html.outputLocation.set(file("app/build/reports/detekt/detekt.html"))
 
         xml.required.set(true)
-        xml.outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
+        xml.outputLocation.set(file("app/build/reports/detekt/detekt.xml"))
 
         txt.required.set(true)
-        txt.outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
+        txt.outputLocation.set(file("app/build/reports/detekt/detekt.txt"))
     }
 }
 
