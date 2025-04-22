@@ -58,6 +58,25 @@ android {
     }
 }
 
+detekt {
+    config.setFrom(files("$rootDir/config/detekt.yml"))
+    buildUponDefaultConfig = true
+}
+
+tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
+    reports {
+        html.required.set(true)
+        html.outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+
+        xml.required.set(true)
+        xml.outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
+
+        txt.required.set(true)
+        txt.outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
+    }
+}
+
+
 // PMD Configuration (outside android block)
 pmd {
     toolVersion = "6.55.0"

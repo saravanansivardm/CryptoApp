@@ -35,5 +35,9 @@ jobs:
       - name: Run lint
         run: ./gradlew ktlintCheck detekt
 
-
+      - name: Upload Detekt HTML Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: detekt-html-report
+          path: app/build/reports/detekt/detekt.html
 
