@@ -55,6 +55,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    detekt {
+        config = files("config/detekt/detekt.yml")
+        baseline = file("config/detekt/baseline.xml")
+    }
+
 }
 
 // PMD Configuration (outside android block)
