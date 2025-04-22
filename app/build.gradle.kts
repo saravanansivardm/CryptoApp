@@ -26,6 +26,10 @@ android {
     }
 
     detekt {
+        toolVersion = "1.23.6"
+        buildUponDefaultConfig = true // use default + custom rules
+        allRules = true // if true, applies all available rules
+        autoCorrect = true // auto-corrects issues
 //        toolVersion = "1.23.6"
 //        buildUponDefaultConfig = true // use default + custom rules
 //        allRules = true // if true, applies all available rules
