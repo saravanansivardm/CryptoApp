@@ -57,10 +57,14 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
     detekt {
-        config = files("config/detekt/detekt.yml")
-        baseline = file("config/detekt/baseline.xml")
+        config = files("$rootDir/detekt.yml")
+        buildUponDefaultConfig = true
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+            txt.required.set(false)
+        }
     }
 
 }
