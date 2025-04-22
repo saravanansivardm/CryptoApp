@@ -69,12 +69,10 @@ tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
             required.set(true)
             outputLocation.set(file("app/build/reports/detekt/detekt.html"))
         }
-        
-        xml.required.set(false)
-        xml.outputLocation.set(file("app/build/reports/detekt/detekt.xml"))
-
-        txt.required.set(false)
-        txt.outputLocation.set(file("app/build/reports/detekt/detekt.txt"))
+        xml.required.set(true)
+        txt.required.set(true)
+        md.required.set(false)
+        sarif.required.set(false)
     }
 }
 

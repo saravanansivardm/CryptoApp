@@ -22,13 +22,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run Detekt & ktlint
-        run: ./gradlew ktlintCheck detekt --continue || true
+        run: ./gradlew ktlintCheck detekt --continue
 
       - name: List Detekt report directory
-        run: ls -l app/build/reports/detekt/
-
-      - name: Show all Detekt files
-        run: find . -name "detekt.*"
+        run: ls -la app/build/reports/detekt/
 
       - name: Upload Detekt HTML Report
         uses: actions/upload-artifact@v4
