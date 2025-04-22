@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="My Custom Ruleset"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+         http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+    xmlns:fn="http://www.w3.org/2005/xpath-functions">
+
+    <description>
+        Custom PMD rule set for Java project with best practices and maintainability checks.
+    </description>
+
+    <!-- ✅ Include full rule categories -->
+    <rule ref="category/java/bestpractices.xml"/>
+    <rule ref="category/java/codestyle.xml"/>
+    <rule ref="category/java/errorprone.xml"/>
+    <rule ref="category/java/performance.xml"/>
+    <rule ref="category/java/documentation.xml"/>
+    <rule ref="category/java/multithreading.xml"/>
+
+    <!-- ✅ Customize individual rule -->
+    <rule ref="category/java/design.xml/ExcessiveMethodLength">
+        <properties>
+            <property name="minimum" value="40"/> <!-- warn if method has > 40 lines -->
+        </properties>
+    </rule>
+
+    <!-- ✅ Disable specific rule -->
+    <rule ref="category/java/codestyle.xml/FieldNamingConventions">
+        <priority>5</priority> <!-- Priority 5 disables it -->
+    </rule>
+
+</ruleset>

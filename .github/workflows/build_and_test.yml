@@ -1,46 +1,35 @@
-name: Run Lint Checks
+name: Code Quality - PMD
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  run_lint_checks:
+  run-pmd:
+    name: Run PMD Check
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Make gradlew executable
+      - name: Grant execute permission to Gradle
         run: chmod +x ./gradlew
 
-      - name: Run Detekt & ktlint
-        run: ./gradlew ktlintCheck detekt --continue || true
+      - name: Run PMD
+        run: ./gradlew runPmd
 
-      - name: Show all Detekt files
-        run: find . -name "detekt.*"
-
-      - name: List Detekt report directory
-        run: ls -la app/build/reports/detekt/
-
-      - name: Upload Detekt All Report
-        uses: actions/upload-artifact@v4
+      - name: Upload PMD Report
+        if: always()
+        uses: actions/upload-artifact@v3
         with:
-          name: detekt-reports
-          path: |
-           app/build/reports/detekt/detekt.html
-           app/build/reports/detekt/detekt.xml
-           app/build/reports/detekt/detekt.txt
-
-#     - name: Upload Detekt HTML Report
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: detekt-html-report
-#         path: app/build/reports/detekt/detekt.html
+          name: pmd-report
+          path: app/build/reports/pmd/

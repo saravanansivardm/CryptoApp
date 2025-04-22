@@ -117,7 +117,7 @@ tasks.register<Pmd>("runPmd") {
 
     reports {
         xml.required.set(false)
-        html.required.set(false)
+        html.required.set(true)
     }
 }
 
