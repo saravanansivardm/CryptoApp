@@ -39,51 +39,8 @@ jobs:
             app/build/reports/detekt/detekt.xml
             app/build/reports/detekt/detekt.txt
 
-      - name: Run PMD
-        run: ./gradlew runPmd
-
-      - name: Upload PMD Report
-        if: always()
-        uses: actions/upload-artifact@v2  # <- ✅ THE STABLE VERSION
-        with:
-          name: pmd-report
-          path: app/build/reports/pmd/
-
 #     - name: Upload Detekt HTML Report
 #       uses: actions/upload-artifact@v4
 #       with:
 #         name: detekt-html-report
 #         path: app/build/reports/detekt/detekt.html
-
-#name: PMD Code Quality
-#
-#on:
-#  push:
-#    branches: [ "master" ]
-#
-#jobs:
-#  run-pmd:
-#    runs-on: ubuntu-22.04  # Use stable runner
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          distribution: 'temurin'
-#          java-version: '17'
-#
-#      - name: Make Gradle executable
-#        run: chmod +x ./gradlew
-#
-#      - name: Run PMD
-#        run: ./gradlew runPmd
-#
-#      - name: Upload PMD Report
-#        if: always()
-#        uses: actions/upload-artifact@v2  # <- ✅ THE STABLE VERSION
-#        with:
-#          name: pmd-report
-#          path: app/build/reports/pmd/
