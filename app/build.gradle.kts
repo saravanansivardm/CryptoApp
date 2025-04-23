@@ -33,8 +33,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -56,34 +55,36 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-}
 
-detekt {
-    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
-    buildUponDefaultConfig = true
-}
+    detekt {
+        config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+        buildUponDefaultConfig = true
+    }
 
-tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
-    reports {
-        html {
-            required.set(true)
-            outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+    tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
+        reports {
+            html {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+            }
+
+            xml {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
+            }
+
+            txt {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
+            }
+
+            md.required.set(false)
+            sarif.required.set(false)
         }
-
-        xml {
-            required.set(true)
-            outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
-        }
-
-        txt {
-            required.set(true)
-            outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
-        }
-
-        md.required.set(false)
-        sarif.required.set(false)
     }
 }
+
+
 
 
 // PMD Configuration (outside android block)
