@@ -28,15 +28,6 @@ android {
             useSupportLibrary = true
         }
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_19
         targetCompatibility = JavaVersion.VERSION_19
@@ -56,35 +47,62 @@ android {
         }
     }
 
-    detekt {
-        config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
-        buildUponDefaultConfig = true
+    buildTypes {
+        debug {
+            isMinifyEnabled = false
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+        }
+
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            )
+        }
     }
+    flavorDimensions += "version"
 
-    tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
-        reports {
-            html {
-                required.set(true)
-                outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
-            }
-
-            xml {
-                required.set(true)
-                outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
-            }
-
-            txt {
-                required.set(true)
-                outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
-            }
-
-            md.required.set(false)
-            sarif.required.set(false)
+    productFlavors {
+        create("free") {
+            dimension = "version"
+            applicationIdSuffix = ".free"
+            versionNameSuffix = "-free"
+        }
+        create("paid") {
+            dimension = "version"
+            applicationIdSuffix = ".paid"
+            versionNameSuffix = "-paid"
         }
     }
 }
 
+detekt {
+    config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+}
 
+tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
+    reports {
+        html {
+            required.set(true)
+            outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+        }
+
+        xml {
+            required.set(true)
+            outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
+        }
+
+        txt {
+            required.set(true)
+            outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
+        }
+
+        md.required.set(false)
+        sarif.required.set(false)
+    }
+}
 
 
 // PMD Configuration (outside android block)
