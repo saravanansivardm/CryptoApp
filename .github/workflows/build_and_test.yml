@@ -24,6 +24,10 @@ jobs:
       - name: Run PMD
         run: ./gradlew runPmd
 
+      - name: Run PMD for free variants
+        run: |
+          ./gradlew runPmdFreeDebug
+
       - name: Show all PMD files
         run: find . -name "pmd.*"
 

@@ -139,7 +139,8 @@ android.applicationVariants.all {
         ruleSets = listOf()
 
         reports {
-            xml.required.set(false)
+            xml.required.set(true)
+            xml.outputLocation.set(file("$buildDir/reports/pmd/$variantName/pmd.xml"))
             html.required.set(true)
             html.outputLocation.set(file("$buildDir/reports/pmd/$variantName/pmd.html"))
         }
