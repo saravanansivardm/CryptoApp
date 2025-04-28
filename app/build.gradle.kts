@@ -81,29 +81,31 @@ detekt {
     config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
     buildUponDefaultConfig = true
 }
+android.applicationVariants.all {
+    val variantName = name // e.g., freeDebug, paidRelease
+    val capitalizedVariant = variantName.replaceFirstChar { it.uppercaseChar() }
+    tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt${capitalizedVariant}").configure {
+        reports {
+            html {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/$variantName/detekt.html"))
+            }
 
-tasks.named<io.gitlab.arturbosch.detekt.Detekt>("detekt").configure {
-    reports {
-        html {
-            required.set(true)
-            outputLocation.set(file("$buildDir/reports/detekt/detekt.html"))
+            xml {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/$variantName/detekt.xml"))
+            }
+
+            txt {
+                required.set(true)
+                outputLocation.set(file("$buildDir/reports/detekt/$variantName/detekt.txt"))
+            }
+
+            md.required.set(false)
+            sarif.required.set(false)
         }
-
-        xml {
-            required.set(true)
-            outputLocation.set(file("$buildDir/reports/detekt/detekt.xml"))
-        }
-
-        txt {
-            required.set(true)
-            outputLocation.set(file("$buildDir/reports/detekt/detekt.txt"))
-        }
-
-        md.required.set(false)
-        sarif.required.set(false)
     }
 }
-
 
 // PMD Configuration (outside android block)
 pmd {
@@ -112,31 +114,35 @@ pmd {
     ruleSetFiles = files("config/pmd/ruleset.xml")
     ruleSets = listOf()
 }
+android.applicationVariants.all {
+    val variantName = name // e.g., freeDebug, paidRelease
+    val capitalizedVariant = variantName.replaceFirstChar { it.uppercaseChar() }
+    tasks.register<Pmd>("runPmd${capitalizedVariant}") {
+        group = "verification"
+        description = "Run PMD analysis"
 
-tasks.register<Pmd>("runPmd") {
-    group = "verification"
-    description = "Run PMD analysis"
+        source = fileTree("src/main/java") {
+            include("**/*.java")
+            exclude(
+                "**/test/**",
+                "**/androidTest/**",
+                "**/commonTest/**",
+                "**/jvmTest/**",
+                "**/androidUnitTest/**",
+                "**/androidInstrumentedTest/**",
+                "**/jsTest/**",
+                "**/iosTest/**"
+            )
+        }
 
-    source = fileTree("src/main/java") {
-        include("**/*.java")
-        exclude(
-            "**/test/**",
-            "**/androidTest/**",
-            "**/commonTest/**",
-            "**/jvmTest/**",
-            "**/androidUnitTest/**",
-            "**/androidInstrumentedTest/**",
-            "**/jsTest/**",
-            "**/iosTest/**"
-        )
-    }
+        ruleSetFiles = files("${rootDir}/config/pmd/ruleset.xml")
+        ruleSets = listOf()
 
-    ruleSetFiles = files("${rootDir}/config/pmd/ruleset.xml")
-    ruleSets = listOf()
-
-    reports {
-        xml.required.set(false)
-        html.required.set(true)
+        reports {
+            xml.required.set(false)
+            html.required.set(true)
+            html.outputLocation.set(file("$buildDir/reports/pmd/$variantName/pmd.html"))
+        }
     }
 }
 
