@@ -36,3 +36,9 @@ jobs:
         with:
           name: pmd-report
           path: build/reports/pmd/
+
+#     - name: Upload Detekt HTML Report
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: detekt-html-report
+#         path: app/build/reports/detekt/detekt.html
