@@ -39,6 +39,7 @@ class TestingAct : ComponentActivity() {
             }
             CryptocurrencyAppTheme {
                 Log.e("testing", "logg")
+                Log.e("testing_02", "logg")
                 Surface(color = Color.Black) {
                     val navController = rememberNavController()
                     NavHost(
