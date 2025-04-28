@@ -1,6 +1,7 @@
 package com.example.cryptocurrencyapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -37,6 +38,7 @@ class TestingAct : ComponentActivity() {
                 e.printStackTrace()
             }
             CryptocurrencyAppTheme {
+                Log.e("testing", "logg")
                 Surface(color = Color.Black) {
                     val navController = rememberNavController()
                     NavHost(
@@ -59,6 +61,7 @@ class TestingAct : ComponentActivity() {
         }
     }
 }
+
 fun check(value: String?) {
     if (value == null) throw NullPointerException() // ❌ Detekt will flag this
 }
