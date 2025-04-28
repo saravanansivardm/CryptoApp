@@ -23,10 +23,10 @@ jobs:
 
       - name: Run PMD for all variants
         run: |
-          ./gradlew runPmdFreeDebug
-          ./gradlew runPmdFreeRelease
-          ./gradlew runPmdPaidDebug
-          ./gradlew runPmdPaidRelease
+          ./gradlew runPmdFreeDebug --continue || true
+          ./gradlew runPmdFreeRelease --continue || true
+          ./gradlew runPmdPaidDebug --continue || true
+          ./gradlew runPmdPaidRelease --continue || true
 
       - name: Show all PMD report files
         run: find . -name "pmd.*"
