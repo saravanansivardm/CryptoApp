@@ -43,8 +43,10 @@ jobs:
         with:
           name: pmd-report
           path: |
-            app/build/reports/pmd/freeDebug/pmd.html
-            app/build/reports/pmd/freeDebug/pmd.xml
+            build/reports/pmd/freeDebug/
+            build/reports/pmd/freeRelease/
+            build/reports/pmd/paidDebug/
+            build/reports/pmd/paidRelease/
 
 #     - name: Upload Detekt HTML Report
 #       uses: actions/upload-artifact@v4
