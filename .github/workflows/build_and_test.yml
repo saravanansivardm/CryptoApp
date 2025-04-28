@@ -21,30 +21,26 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Run PMD
-        run: ./gradlew runPmdFreeDebug
-
-      - name: Run PMD for free variants
+      - name: Run PMD for all variants
         run: |
           ./gradlew runPmdFreeDebug
+          ./gradlew runPmdFreeRelease
+          ./gradlew runPmdPaidDebug
+          ./gradlew runPmdPaidRelease
 
-      - name: Show all PMD files
+      - name: Show all PMD report files
         run: find . -name "pmd.*"
 
       - name: List PMD report directory
-        run: ls -la build/reports/pmd/
+        run: ls -la app/build/reports/pmd/
 
-      - name: Upload PMD Report (HTML)
+      - name: Upload PMD Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: pmd-report
+          name: pmd-reports
           path: |
-            build/reports/pmd/freeDebug/pmd.html
-            build/reports/pmd/freeDebug/pmd.xml
-
-#     - name: Upload Detekt HTML Report
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: detekt-html-report
-#         path: app/build/reports/detekt/detekt.html
+            app/build/reports/pmd/freeDebug/
+            app/build/reports/pmd/freeRelease/
+            app/build/reports/pmd/paidDebug/
+            app/build/reports/pmd/paidRelease/
