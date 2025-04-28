@@ -2,7 +2,7 @@ name: Run Lint Checks
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "feature/add-pmd-to-github-action" ]
 
 jobs:
   run_lint_checks:
@@ -21,26 +21,18 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Run Detekt & ktlint
-        run: ./gradlew ktlintCheck detekt --continue || true
+      - name: Run PMD
+        run: ./gradlew runPmd
 
-      - name: Show all Detekt files
-        run: find . -name "detekt.*"
+      - name: Show all PMD files
+        run: find . -name "pmd.*"
 
-      - name: List Detekt report directory
-        run: ls -la app/build/reports/detekt/
+      - name: List PMD report directory
+        run: ls -la build/reports/pmd/
 
-      - name: Upload Detekt All Report
+      - name: Upload PMD Report (HTML)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: detekt-reports
-          path: |
-            app/build/reports/detekt/detekt.html
-            app/build/reports/detekt/detekt.xml
-            app/build/reports/detekt/detekt.txt
-
-#     - name: Upload Detekt HTML Report
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: detekt-html-report
-#         path: app/build/reports/detekt/detekt.html
+          name: pmd-report
+          path: build/reports/pmd/
