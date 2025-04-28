@@ -2,7 +2,7 @@ name: Run Lint Checks
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "feature/combine-detekt-pmd-into-one" ]
 
 jobs:
   run_lint_checks:
