@@ -21,26 +21,42 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      # --- Run Detekt + ktlint ---
       - name: Run Detekt & ktlint
         run: ./gradlew ktlintCheck detekt --continue || true
 
+      # --- Run PMD for all variants ---
+      - name: Run PMD for all variants
+        run: |
+          ./gradlew runPmdFreeDebug --continue || true
+          ./gradlew runPmdFreeRelease --continue || true
+          ./gradlew runPmdPaidDebug --continue || true
+          ./gradlew runPmdPaidRelease --continue || true
+
+      # --- Debug: Show all Detekt files ---
       - name: Show all Detekt files
         run: find . -name "detekt.*"
 
-      - name: List Detekt report directory
-        run: ls -la app/build/reports/detekt/
+      # --- Debug: Show all PMD files ---
+      - name: Show PMD files
+        run: find . -name "pmd.*"
 
+      # --- Upload Detekt Reports ---
       - name: Upload Detekt All Report
         uses: actions/upload-artifact@v4
         with:
           name: detekt-reports
           path: |
-            app/build/reports/detekt/detekt.html
-            app/build/reports/detekt/detekt.xml
-            app/build/reports/detekt/detekt.txt
+            app/build/reports/detekt/
 
-#     - name: Upload Detekt HTML Report
-#       uses: actions/upload-artifact@v4
-#       with:
-#         name: detekt-html-report
-#         path: app/build/reports/detekt/detekt.html
+      # --- Upload PMD Reports ---
+      - name: Upload PMD Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmd-reports
+          path: |
+            app/build/reports/pmd/freeDebug/
+            app/build/reports/pmd/freeRelease/
+            app/build/reports/pmd/paidDebug/
+            app/build/reports/pmd/paidRelease/
